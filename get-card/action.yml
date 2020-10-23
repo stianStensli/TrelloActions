@@ -12,7 +12,7 @@ inputs:
     default: '-1'
 
 outputs:
-  time:
+  cardId:
     description: 'time used'
 runs:
   using: 'node12'
