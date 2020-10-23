@@ -4,6 +4,11 @@ const fetch = require('node-fetch');
 
 const trelloCardPattern = /^T-(\d+)/;
 
+function sleep(seconds)  {
+    var e = new Date().getTime() + (seconds * 1000);
+    while (new Date().getTime() <= e) {}
+}
+
 try {
     const key = core.getInput('key');
     const token = core.getInput('token');
@@ -21,11 +26,12 @@ try {
                 .then(res => res.json())
                 .then(json => {
                     const requestedCard = json.find(v => v.idShort == requestedCardShortId)
-                    console.log(`The card: ${requestedCard}`)
+                    console.log(`The card: ${requestedCard.id}`)
                     core.setOutput(requestedCard.id);
                 })
         };
-        await Task.Run(() => run());
+        run();
+        sleep(1)
     }
 } catch (error) {
     core.setFailed(error.message);
