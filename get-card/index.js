@@ -16,9 +16,8 @@ try {
     const requestedCardShortId = match[1]
     
 
-    const allCards = fetch(`https://api.trello.com/1/boards/5ef097c91bc451362bac9ac4/cards?fields=name,url,idShort&key=${key}&token=${token}`, { method: 'GET'})
-    .then(res => res.json())
-    .then(json => console.log(json));
+    const allCards = await fetch(`https://api.trello.com/1/boards/5ef097c91bc451362bac9ac4/cards?fields=name,url,idShort&key=${key}&token=${token}`, { method: 'GET'})
+    .then(res => res.json());
     
     const requestedCard = allCards.find(v => v.idShort == requestedCardShortId)
     console.log(`The card: ${requestedCard}`)
