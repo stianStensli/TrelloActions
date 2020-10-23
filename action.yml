@@ -1,13 +1,19 @@
-name: 'Hello World'
-description: 'Greet someone and record the time'
+name: 'Trello card fetch'
+description: 'Get a trello card through an action'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
+  key: 
+    description: 'Trello key'
     required: true
-    default: 'World'
+    default: '-1'
+
+  token:
+    description: 'Trello token'
+    required: true
+    default: '-1'
+
 outputs:
-  time: # id of output
-    description: 'The time we greeted you'
+  time:
+    description: 'time used'
 runs:
   using: 'node12'
   main: 'index.js'
