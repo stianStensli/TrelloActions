@@ -13,7 +13,7 @@ inputs:
 
 outputs:
   cardId:
-    description: 'time used'
+    description: 'card Id'
 runs:
   using: 'node12'
   main: 'index.js'
