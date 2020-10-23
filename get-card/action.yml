@@ -14,6 +14,8 @@ inputs:
 outputs:
   cardId:
     description: 'card Id'
+  test:
+    description: 'test value'
 runs:
   using: 'node12'
   main: 'index.js'

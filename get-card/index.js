@@ -27,12 +27,10 @@ try {
                 .then(json => {
                     const requestedCard = json.find(v => v.idShort == requestedCardShortId)
                     console.log(`The card: ${requestedCard.id}`)
-                    core.setOutput(requestedCard.id);
-
+                    core.setOutput("cardId", requestedCard.id);
                 })
         };
-        core.setOutput("1");
-        core.setOutput("2");
+        core.setOutput("test","working");
         run();
         sleep(1)
     }
