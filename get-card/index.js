@@ -28,6 +28,7 @@ try {
                     const requestedCard = json.find(v => v.idShort == requestedCardShortId)
                     console.log(`The card: ${requestedCard.id}`)
                     core.setOutput(requestedCard.id);
+                    
                 })
         };
         run();
