@@ -12,7 +12,7 @@ try {
     const payload = JSON.stringify(github.context.payload, undefined, 2)
     const message = github.context.payload.head_commit.message
     
-    fetch(`https://api.trello.com/1/boards/5ef097c91bc451362bac9ac4/cards?fields=name,url,idShort&key=${key}&token=${token}`, { method: 'POST', body: form })
+    fetch(`https://api.trello.com/1/boards/5ef097c91bc451362bac9ac4/cards?fields=name,url,idShort&key=${key}&token=${token}`, { method: 'GET'})
     .then(res => res.json())
     .then(json => console.log(json));
 
