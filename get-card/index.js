@@ -13,16 +13,19 @@ try {
     if(match === null){
         core.setOutput("");
     }else{
-    const requestedCardShortId = match[1]
-    
+        const requestedCardShortId = match[1]
+        console.log(`Requested short ID: ${requestedCardShortId}`)
 
-    fetch(`https://api.trello.com/1/boards/5ef097c91bc451362bac9ac4/cards?fields=name,url,idShort&key=${key}&token=${token}`, { method: 'GET'})
-    .then(res => {
-        const requestedCard = res.json().find(v => v.idShort == requestedCardShortId)
-        console.log(`The card: ${requestedCard}`)
-    
-        core.setOutput(requestedCard.id);
-    });
+        const run = async () => {
+            fetch(`https://api.trello.com/1/boards/5ef097c91bc451362bac9ac4/cards?fields=name,url,idShort&key=${key}&token=${token}`, { method: 'GET'})
+                .then(res => res.json())
+                .then(json => {
+                    const requestedCard = json.find(v => v.idShort == requestedCardShortId)
+                    console.log(`The card: ${requestedCard}`)
+                    core.setOutput(requestedCard.id);
+                })
+        };
+        run()
     }
 } catch (error) {
     core.setFailed(error.message);
