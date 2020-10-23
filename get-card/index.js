@@ -33,7 +33,6 @@ try {
         };
         core.setOutput("1");
         core.setOutput("2");
-        core.setOutput(requestedCard.id);
         run();
         sleep(1)
     }
