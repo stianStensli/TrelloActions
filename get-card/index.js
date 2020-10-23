@@ -25,7 +25,7 @@ try {
                     core.setOutput(requestedCard.id);
                 })
         };
-        run()
+        await Task.Run(() => run());
     }
 } catch (error) {
     core.setFailed(error.message);
