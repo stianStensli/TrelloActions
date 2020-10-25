@@ -13,8 +13,8 @@ try {
     const cardId = core.getInput('cardId');
     
     const url = github.context.payload.head_commit.url;
-    
-    if(cardId !== undefined){
+
+    if(cardId !== undefined || cardId !== null || cardId !== "" ){
         console.log(`Using url as attachment: ${url}`)
         console.log(`Adding attachment to trello card: ${cardId}`)
 
