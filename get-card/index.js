@@ -12,17 +12,15 @@ function sleep(seconds)  {
 try {
     const key = core.getInput('key');
     const token = core.getInput('token');
+    const board = core.getInput('board');
     
-    const time = (new Date()).toTimeString();
     var match = github.context.payload.head_commit.message.match(trelloCardPattern);
-    if(match === null){
-        core.setOutput("");
-    }else{
+    if(match !== null) {
         const requestedCardShortId = match[1]
         console.log(`Requested short ID: ${requestedCardShortId}`)
 
         const run = async () => {
-            fetch(`https://api.trello.com/1/boards/5ef097c91bc451362bac9ac4/cards?fields=name,url,idShort&key=${key}&token=${token}`, { method: 'GET'})
+            fetch(`https://api.trello.com/1/boards/${board}/cards?fields=name,url,idShort&key=${key}&token=${token}`, { method: 'GET'})
                 .then(res => res.json())
                 .then(json => {
                     const requestedCard = json.find(v => v.idShort == requestedCardShortId)
@@ -30,9 +28,8 @@ try {
                     core.setOutput("cardId", requestedCard.id);
                 })
         };
-        core.setOutput("test","working");
         run();
-        sleep(1)
+        sleep(1.5)
     }
 } catch (error) {
     core.setFailed(error.message);

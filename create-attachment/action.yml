@@ -1,6 +1,11 @@
-name: 'Trello card fetch'
-description: 'Get a trello card through an action'
+name: 'Attach Branch'
+description: 'Attach branch'
 inputs:
+  cardId: 
+    description: 'Trello card id'
+    required: true
+    default: '-1'
+
   key: 
     description: 'Trello key'
     required: true
@@ -10,15 +15,6 @@ inputs:
     description: 'Trello token'
     required: true
     default: '-1'
-
-  board:
-    description: 'Trello board'
-    required: true
-    default: '-1'
-
-outputs:
-  cardId:
-    description: 'card Id'
 
 runs:
   using: 'node12'
