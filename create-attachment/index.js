@@ -12,20 +12,27 @@ try {
     const token = core.getInput('token');
     const cardId = core.getInput('cardId');
     
-    const url = github.context.payload.head_commit.message.url;
+    const url = github.context.payload.head_commit.url;
+    
     if(cardId !== undefined){
         console.log(`Using url as attachment: ${url}`)
         console.log(`Adding attachment to trello card: ${cardId}`)
 
         const run = async () => {
-            fetch(`https://api.trello.com/1/cards/${cardId}}/attachments?url=https://github.com/stianStensli/GithubAtionsTest&key=${key}&token=${token}`, { method: 'POST'})
+            fetch(`https://api.trello.com/1/cards/${cardId}/attachments?url=${url}&key=${key}&token=${token}`, 
+                { 
+                    method: 'POST', 
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
                 .then(res => console.log(res))
                 .then(console.log("Upload complete..."))
         };
         run();
         sleep(1)
     }else{
-        console.log("This action is ignored, as no card-id is given...")
+        console.log("This action is ignored, as no card-id is provided...")
     }
 } catch (error) {
     core.setFailed(error.message);
