@@ -12,12 +12,14 @@ try {
     const token = core.getInput('token');
     const cardId = core.getInput('cardId');
     
-    var url = github.context.payload.head_commit.message.url;
+    const url = github.context.payload.head_commit.message.url;
     if(cardId !== undefined){
+        console.log(`Using url as attachment: ${url}`)
         console.log(`Adding attachment to trello card: ${cardId}`)
 
         const run = async () => {
-            fetch(`https://api.trello.com/1/cards/${cardId}}/attachments?url=${url}&key=${key}&token=${token}`, { method: 'POST'})
+            fetch(`https://api.trello.com/1/cards/${cardId}}/attachments?url=https://github.com/stianStensli/GithubAtionsTest&key=${key}&token=${token}`, { method: 'POST'})
+                .then(res => console.log(res))
                 .then(console.log("Upload complete..."))
         };
         run();
