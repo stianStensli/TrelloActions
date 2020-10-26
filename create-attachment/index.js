@@ -34,7 +34,7 @@ try {
             })
             .then(res => {
                 const attachments = res.json()
-                print(`Current attachments: ${attachments}`)
+                console.log(`Current attachments: ${attachments}`)
                 if(!attachments.find(v => v.url == url)){
                     fetch(`https://api.trello.com/1/cards/${cardId}/attachments?url=${url}&key=${key}&token=${token}`, 
                         { 
