@@ -10,16 +10,14 @@ try {
     
     var url;
     if(type == "branch" ){
-        const branch   = github.context.payload.ref.replace("refs/heads/","");  // refs/heads/****
-        const org_repo = github.context.payload.repository.full_name;                      // org/repo
-        url = `https://github.com/${org_repo}/tree/${branch}`;           // https://github.com/org/repo/tree/branch
+        const branch   = github.context.payload.ref.replace("refs/heads/","");
+        const org_repo = github.context.payload.repository.full_name;
+        url = `https://github.com/${org_repo}/tree/${branch}`;
     } else {
         url = github.context.payload.head_commit.url;
     }
 
-    if(cardId !== undefined || cardId !== null || cardId !== "" || !cardId) {
-        console.log(cardId)
-        console.log(typeof cardId)
+    if(cardId !== undefined && cardId !== null && cardId !== "") {
         console.log(`Using attachment type: ${type}`)
         console.log(`Using url as attachment: ${url}`)
         console.log(`Adding attachment to trello card: ${cardId}`)
@@ -34,7 +32,7 @@ try {
             })
             .then(res => res.json())
             .then(attachments => {
-                console.log(`Current attachments: ${attachments}`)
+                console.log(`Current number of attachments: ${attachments.length}`)
                 if(!attachments.find(v => v.url == url)){
                     fetch(`https://api.trello.com/1/cards/${cardId}/attachments?url=${url}&key=${key}&token=${token}`, 
                         { 
