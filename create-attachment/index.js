@@ -25,13 +25,14 @@ try {
         console.log(`Adding attachment to trello card: ${cardId}`)
 
         const run = async () => {
-            fetch(`https://api.trello.com/1/cards/${cardId}/attachments?&key=${key}&token=${token}`, 
+            fetch(`https://api.trello.com/1/cards/${cardId}/attachments?key=${key}&token=${token}`, 
             { 
                 method: 'GET', 
                 headers: {
                     'Accept': 'application/json'
                 }
-            }).then(res => {
+            })
+            .then(res => {
                 const attachments = res.json()
                 print(`Current attachments: ${attachments}`)
                 if(!attachments.find(v => v.url == url)){
@@ -44,10 +45,11 @@ try {
                         })
                         .then(res => console.log(res))
                         .then(console.log("Upload complete..."))
+                        .catch(error => console.log(error));
                 }else{
                     console.log("Adding attachment was canceled to prevent duplicate attachment.")
                 }
-            });
+            }).catch(error => console.log(error));
         };
         run();
     }else{
