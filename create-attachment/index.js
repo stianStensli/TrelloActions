@@ -1,20 +1,20 @@
-import { getInput, setFailed } from '@actions/core';
-import { context } from '@actions/github';
-import fetch from 'node-fetch';
+const core = require('@actions/core');
+const github = require('@actions/github');
+const fetch = require('node-fetch');
 
 try {
-    const key = getInput('key');
-    const token = getInput('token');
-    const cardId = getInput('card-id');
-    const type = getInput('attachment-type');
+    const key = core.getInput('key');
+    const token = core.getInput('token');
+    const cardId = core.getInput('card-id');
+    const type = core.getInput('attachment-type');
     
     var url;
     if(type == "branch" ){
-        const branch   = context.payload.ref.replace("refs/heads/","");  // refs/heads/****
-        const org_repo = context.payload.full_name;                      // org/repo
+        const branch   = github.context.payload.ref.replace("refs/heads/","");  // refs/heads/****
+        const org_repo = github.context.payload.full_name;                      // org/repo
         url = `https://github.com/${org_repo}/tree/${branch}`;           // https://github.com/org/repo/tree/branch
     } else {
-        url = context.payload.head_commit.url;
+        url = github.context.payload.head_commit.url;
     }
 
     if(cardId !== undefined || cardId !== null || cardId !== "" ){
@@ -38,5 +38,5 @@ try {
         console.log("This action is ignored, as no card-id is provided...")
     }
 } catch (error) {
-    setFailed(error.message);
+    core.setFailed(error.message);
 }

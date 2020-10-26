@@ -1,6 +1,6 @@
-import { getInput, setOutput, setFailed } from '@actions/core';
-import { context } from '@actions/github';
-import fetch from 'node-fetch';
+const core = require('@actions/core');
+const github = require('@actions/github');
+const fetch = require('node-fetch');
 
 const trelloCardPattern = /^[F|f][O|o]-(\d+)/;
 
@@ -10,11 +10,11 @@ function sleep(seconds)  {
 }
 
 try {
-    const key = getInput('key');
-    const token = getInput('token');
-    const board = getInput('board');
+    const key = core.getInput('key');
+    const token = core.getInput('token');
+    const board = core.getInput('board');
     
-    var match = context.payload.head_commit.message.match(trelloCardPattern);
+    var match = github.context.payload.head_commit.message.match(trelloCardPattern);
     if(match !== null) {
         const requestedCardShortId = match[1]
         console.log(`Requested short ID: ${requestedCardShortId}`)
@@ -25,12 +25,12 @@ try {
                 .then(json => {
                     const requestedCard = json.find(v => v.idShort == requestedCardShortId)
                     console.log(`The card: ${requestedCard.id}`)
-                    setOutput("cardId", requestedCard.id);
+                    core.setOutput("card-id", requestedCard.id);
                 })
         };
         run();
         sleep(1.5); // TODO: find better method of witing for respons
     }
 } catch (error) {
-    setFailed(error.message);
+    core.setFailed(error.message);
 }
