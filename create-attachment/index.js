@@ -32,8 +32,8 @@ try {
                     'Accept': 'application/json'
                 }
             })
-            .then(res => {
-                const attachments = res.json()
+            .then(res => res.json())
+            .then(attachments => {
                 console.log(`Current attachments: ${attachments}`)
                 if(!attachments.find(v => v.url == url)){
                     fetch(`https://api.trello.com/1/cards/${cardId}/attachments?url=${url}&key=${key}&token=${token}`, 
