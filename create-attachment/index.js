@@ -17,21 +17,37 @@ try {
         url = github.context.payload.head_commit.url;
     }
 
-    if(cardId !== undefined || cardId !== null || cardId !== "" ){
+    if(cardId !== undefined || cardId !== null || cardId !== "" || !cardId) {
+        console.log(cardId)
+        console.log(typeof cardId)
         console.log(`Using attachment type: ${type}`)
         console.log(`Using url as attachment: ${url}`)
         console.log(`Adding attachment to trello card: ${cardId}`)
 
         const run = async () => {
-            fetch(`https://api.trello.com/1/cards/${cardId}/attachments?url=${url}&key=${key}&token=${token}`, 
-                { 
-                    method: 'POST', 
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                })
-                .then(res => console.log(res))
-                .then(console.log("Upload complete..."))
+            fetch(`https://api.trello.com/1/cards/${cardId}/attachments?&key=${key}&token=${token}`, 
+            { 
+                method: 'GET', 
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(res => {
+                const attachments = res.json()
+                print(`Current attachments: ${attachments}`)
+                if(!attachments.find(v => v.url == url)){
+                    fetch(`https://api.trello.com/1/cards/${cardId}/attachments?url=${url}&key=${key}&token=${token}`, 
+                        { 
+                            method: 'POST', 
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        })
+                        .then(res => console.log(res))
+                        .then(console.log("Upload complete..."))
+                }else{
+                    console.log("Adding attachment was canceled to prevent duplicate attachment.")
+                }
+            });
         };
         run();
     }else{
