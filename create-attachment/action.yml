@@ -1,10 +1,10 @@
 name: 'Attach Branch'
 description: 'Attach branch'
 inputs:
-  cardId: 
+  card-id: 
     description: 'Trello card id'
-    required: true
-    default: '-1'
+    required: false
+    default: ''
 
   key: 
     description: 'Trello key'
@@ -15,6 +15,11 @@ inputs:
     description: 'Trello token'
     required: true
     default: '-1'
+
+  attachment-type:
+    description: 'Types of url to attachme, the value of "branch" or "commit".'
+    required: false
+    default: 'commit'
 
 runs:
   using: 'node12'

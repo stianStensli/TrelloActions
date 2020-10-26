@@ -1,8 +1,8 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
-const fetch = require('node-fetch');
+import { getInput, setOutput, setFailed } from '@actions/core';
+import { context } from '@actions/github';
+import fetch from 'node-fetch';
 
-const trelloCardPattern = /^T-(\d+)/;
+const trelloCardPattern = /^[F|f][O|o]-(\d+)/;
 
 function sleep(seconds)  {
     var e = new Date().getTime() + (seconds * 2000);
@@ -10,11 +10,11 @@ function sleep(seconds)  {
 }
 
 try {
-    const key = core.getInput('key');
-    const token = core.getInput('token');
-    const board = core.getInput('board');
+    const key = getInput('key');
+    const token = getInput('token');
+    const board = getInput('board');
     
-    var match = github.context.payload.head_commit.message.match(trelloCardPattern);
+    var match = context.payload.head_commit.message.match(trelloCardPattern);
     if(match !== null) {
         const requestedCardShortId = match[1]
         console.log(`Requested short ID: ${requestedCardShortId}`)
@@ -25,12 +25,12 @@ try {
                 .then(json => {
                     const requestedCard = json.find(v => v.idShort == requestedCardShortId)
                     console.log(`The card: ${requestedCard.id}`)
-                    core.setOutput("cardId", requestedCard.id);
+                    setOutput("cardId", requestedCard.id);
                 })
         };
         run();
-        sleep(1.5)
+        sleep(1.5); // TODO: find better method of witing for respons
     }
 } catch (error) {
-    core.setFailed(error.message);
+    setFailed(error.message);
 }
