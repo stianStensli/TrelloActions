@@ -11,7 +11,7 @@ try {
     var url;
     if(type == "branch" ){
         const branch   = github.context.payload.ref.replace("refs/heads/","");  // refs/heads/****
-        const org_repo = github.context.payload.full_name;                      // org/repo
+        const org_repo = github.context.payload.repository.full_name;                      // org/repo
         url = `https://github.com/${org_repo}/tree/${branch}`;           // https://github.com/org/repo/tree/branch
     } else {
         url = github.context.payload.head_commit.url;
