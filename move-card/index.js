@@ -19,7 +19,7 @@ fetch(`https://api.trello.com/1/boards/${board}/lists?key=${key}&token=${token}`
             console.log(`Did not find list with the name: ${newList.id}`)
         }else{
             console.log(`Found list element: ${newListElem}`);
-            fetch(`https://api.trello.com/1/cards/${cardId}/attachments?idList=${newListElem.id}&key=${key}&token=${token}`, 
+            fetch(`https://api.trello.com/1/cards/${cardId}?idList=${newListElem.id}&key=${key}&token=${token}`, 
             { 
                 method: 'PUT', 
                 headers: {
