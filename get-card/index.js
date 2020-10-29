@@ -11,7 +11,6 @@ async function apiCall(board, key, token, requestedCardShortId)  {
             const requestedCard = json.find(v => v.idShort == requestedCardShortId)
             console.log(`The card: ${requestedCard.id}`)
             core.setOutput("card-id", requestedCard.id);
-            return requestedCard.id
         })
         .catch(msg => console.log(msg))
 }
@@ -27,8 +26,7 @@ try {
         console.log(`Requested short ID: ${requestedCardShortId}`)
 
         core.group('Fetching card id', async () => {
-            const response = await apiCall(board, key, token, requestedCardShortId);
-            return response
+            await apiCall(board, key, token, requestedCardShortId);
           });
 
     }else{
