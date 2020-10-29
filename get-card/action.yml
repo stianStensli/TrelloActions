@@ -20,7 +20,7 @@ outputs:
   card-id:
     description: 'card Id'
   success:
-    default: false
+    description: 'Fetching card id was successfull'
 
 runs:
   using: 'node12'
