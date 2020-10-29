@@ -15,10 +15,10 @@ fetch(`https://api.trello.com/1/boards/${board}/lists?key=${key}&token=${token}`
         console.log(`Current number of lists: ${lists.length}`);
         const newListId = lists.find(v => v.name == newList);
 
-        if(!toListId){
+        if(!newListId){
             console.log(`Did not find list with the name: ${newListId}`)
         }else{
-            fetch(`https://api.trello.com/1/cards/${cardId}/attachments?idList=${toListId}&key=${key}&token=${token}`, 
+            fetch(`https://api.trello.com/1/cards/${cardId}/attachments?idList=${newListId}&key=${key}&token=${token}`, 
             { 
                 method: 'PUT', 
                 headers: {
