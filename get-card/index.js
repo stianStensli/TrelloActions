@@ -2,7 +2,7 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const fetch = require('node-fetch');
 
-const trelloCardPattern = /^[F|f][O|o]-(\d+)/;
+const trelloCardPattern = /^[T|t][C|c]-(\d+)/;
 
 function sleep(seconds)  {
     var e = new Date().getTime() + (seconds * 2000);
@@ -30,6 +30,8 @@ try {
         };
         run();
         sleep(1.5);
+    }else{
+        console.log("Commit message for Trello link must start with TC-<num>")
     }
 } catch (error) {
     core.setFailed(error.message);
