@@ -11,10 +11,13 @@ async function apiCall(board, key, token)  {
         .then(json => {
             const requestedCard = json.find(v => v.idShort == requestedCardShortId)
             console.log(`The card: ${requestedCard.id}`)
+            core.setOutput("card-id", requestedCard.id);
             return requestedCard.id
-    }).finally(() => {
-        core.endGroup()
-    });
+        })
+        .catch(msg => console.log(msg))
+        .finally(() => {
+            core.endGroup()
+        });
 }
 
 try {
@@ -31,7 +34,6 @@ try {
             const response = await apiCall(board, key, token);
             return response
           });
-          core.setOutput("card-id", result);
 
     }else{
         console.log("Commit message for Trello link must start with TC-<num>")
