@@ -3,7 +3,7 @@ const github = require('@actions/github');
 const fetch = require('node-fetch');
 
 async function apiCall(key, token, board, newList, cardId)  {
-fetch(`https://api.trello.com/1/boards/${cardId}/lists?key=${key}&token=${token}`, 
+fetch(`https://api.trello.com/1/boards/${board}/lists?key=${key}&token=${token}`, 
     { 
         method: 'GET', 
         headers: {
@@ -18,7 +18,7 @@ fetch(`https://api.trello.com/1/boards/${cardId}/lists?key=${key}&token=${token}
         if(!toListId){
             console.log(`Did not find list with the name: ${newListId}`)
         }else{
-            fetch(`https://api.trello.com/1/cards/${board}/attachments?idList=${toListId}&key=${key}&token=${token}`, 
+            fetch(`https://api.trello.com/1/cards/${cardId}/attachments?idList=${toListId}&key=${key}&token=${token}`, 
             { 
                 method: 'PUT', 
                 headers: {
