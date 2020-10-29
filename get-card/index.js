@@ -5,7 +5,7 @@ const fetch = require('node-fetch');
 const trelloCardPattern = /^[T|t][C|c]-(\d+)/;
 
 
-async function apiCall(board, key, token)  {
+async function apiCall(board, key, token, requestedCardShortId)  {
     return fetch(`https://api.trello.com/1/boards/${board}/cards?fields=name,url,idShort&key=${key}&token=${token}`, { method: 'GET'})
         .then(res => res.json())
         .then(json => {
@@ -31,7 +31,7 @@ try {
         console.log(`Requested short ID: ${requestedCardShortId}`)
 
         const result = core.group('Fetching card id', async () => {
-            const response = await apiCall(board, key, token);
+            const response = await apiCall(board, key, token, requestedCardShortId);
             return response
           });
 
