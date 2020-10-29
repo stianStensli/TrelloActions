@@ -4,11 +4,6 @@ const fetch = require('node-fetch');
 
 const trelloCardPattern = /^[T|t][C|c]-(\d+)/;
 
-function sleep(seconds)  {
-    var e = new Date().getTime() + (seconds * 2000);
-    while (new Date().getTime() <= e) {}
-}
-
 try {
     const key = core.getInput('key');
     const token = core.getInput('token');
@@ -19,17 +14,18 @@ try {
         const requestedCardShortId = match[1]
         console.log(`Requested short ID: ${requestedCardShortId}`)
 
-        const run = async () => {
-            fetch(`https://api.trello.com/1/boards/${board}/cards?fields=name,url,idShort&key=${key}&token=${token}`, { method: 'GET'})
+        const result = await core.group('Fetching card id', async () => {
+            const response = await fetch(`https://api.trello.com/1/boards/${board}/cards?fields=name,url,idShort&key=${key}&token=${token}`, { method: 'GET'})
                 .then(res => res.json())
                 .then(json => {
                     const requestedCard = json.find(v => v.idShort == requestedCardShortId)
                     console.log(`The card: ${requestedCard.id}`)
-                    core.setOutput("card-id", requestedCard.id);
+                    return requestedCard.id
                 })
-        };
-        run();
-        sleep(1.5);
+            return response
+          });
+          core.setOutput("card-id", result);
+          
     }else{
         console.log("Commit message for Trello link must start with TC-<num>")
     }
