@@ -29,7 +29,7 @@ try {
                 })
         };
         run();
-        sleep(1.5); // TODO: find better method of witing for respons
+        sleep(1.5);
     }
 } catch (error) {
     core.setFailed(error.message);
