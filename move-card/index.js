@@ -13,12 +13,13 @@ fetch(`https://api.trello.com/1/boards/${board}/lists?key=${key}&token=${token}`
     .then(res => res.json())
     .then(lists => {
         console.log(`Current number of lists: ${lists.length}`);
-        const newListId = lists.find(v => v.name == newList);
+        const newListElem = lists.find(v => v.name == newList);
 
-        if(!newListId){
-            console.log(`Did not find list with the name: ${newListId}`)
+        if(!newListElem){
+            console.log(`Did not find list with the name: ${newList}`)
         }else{
-            fetch(`https://api.trello.com/1/cards/${cardId}/attachments?idList=${newListId}&key=${key}&token=${token}`, 
+            console.log(`Found list element: ${newListElem}`);
+            fetch(`https://api.trello.com/1/cards/${cardId}/attachments?idList=${newListElem.idBoard}&key=${key}&token=${token}`, 
             { 
                 method: 'PUT', 
                 headers: {
