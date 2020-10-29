@@ -2,6 +2,34 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const fetch = require('node-fetch');
 
+async function apiCall(cardId, key, token, url)  {
+    fetch(`https://api.trello.com/1/cards/${cardId}/attachments?key=${key}&token=${token}`, 
+    { 
+        method: 'GET', 
+        headers: {
+            'Accept': 'application/json'
+        }
+    })
+    .then(res => res.json())
+    .then(attachments => {
+        console.log(`Current number of attachments: ${attachments.length}`)
+        if(!attachments.find(v => v.url == url)){
+            fetch(`https://api.trello.com/1/cards/${cardId}/attachments?url=${url}&key=${key}&token=${token}`, 
+                { 
+                    method: 'POST', 
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(res => console.log(res))
+                .then(console.log("Upload complete..."))
+                .catch(error => console.log(error));
+        }else{
+            console.log("Adding attachment was canceled to prevent duplicate attachment.")
+        }
+    }).catch(error => console.log(error));
+}
+
 try {
     const key = core.getInput('key');
     const token = core.getInput('token');
@@ -22,34 +50,10 @@ try {
         console.log(`Using url as attachment: ${url}`)
         console.log(`Adding attachment to trello card: ${cardId}`)
 
-        const run = async () => {
-            fetch(`https://api.trello.com/1/cards/${cardId}/attachments?key=${key}&token=${token}`, 
-            { 
-                method: 'GET', 
-                headers: {
-                    'Accept': 'application/json'
-                }
-            })
-            .then(res => res.json())
-            .then(attachments => {
-                console.log(`Current number of attachments: ${attachments.length}`)
-                if(!attachments.find(v => v.url == url)){
-                    fetch(`https://api.trello.com/1/cards/${cardId}/attachments?url=${url}&key=${key}&token=${token}`, 
-                        { 
-                            method: 'POST', 
-                            headers: {
-                                'Accept': 'application/json'
-                            }
-                        })
-                        .then(res => console.log(res))
-                        .then(console.log("Upload complete..."))
-                        .catch(error => console.log(error));
-                }else{
-                    console.log("Adding attachment was canceled to prevent duplicate attachment.")
-                }
-            }).catch(error => console.log(error));
-        };
-        run();
+        core.group('Posting attachment', async () => {
+            await apiCall(ardId, key, token, url);
+        });
+
     }else{
         console.log("This action is ignored, as no card-id is provided...")
     }
