@@ -51,7 +51,7 @@ try {
         console.log(`Adding attachment to trello card: ${cardId}`)
 
         core.group('Posting attachment', async () => {
-            await apiCall(ardId, key, token, url);
+            await apiCall(cardId, key, token, url);
         });
 
     }else{
