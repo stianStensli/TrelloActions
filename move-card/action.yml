@@ -1,5 +1,5 @@
-name: 'Trello card fetch'
-description: 'Get a trello card through an action'
+name: 'Move card'
+description: 'Moves a trello card'
 inputs:
   key: 
     description: 'Trello key'
@@ -16,11 +16,6 @@ inputs:
     required: true
     default: '-1'
 
-outputs:
-  card-id:
-    description: 'card Id'
-  success:
-    default: false
 
 runs:
   using: 'node12'

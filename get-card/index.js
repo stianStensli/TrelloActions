@@ -10,6 +10,8 @@ async function apiCall(board, key, token, requestedCardShortId)  {
         .then(json => {
             const requestedCard = json.find(v => v.idShort == requestedCardShortId)
             console.log(`The card: ${requestedCard.id}`)
+            
+            core.setOutput("success", true)
             core.setOutput("card-id", requestedCard.id);
         })
         .catch(msg => console.log(msg))
