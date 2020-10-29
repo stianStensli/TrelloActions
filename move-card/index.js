@@ -40,10 +40,12 @@ try {
     const key = core.getInput('key');
     const token = core.getInput('token');
     const board = core.getInput('board');
-    const newList = core.getInput('new-list');
+    const newList = core.getInput('to-list');
     const cardId = core.getInput('card-id');
 
     console.log(`Moving card to list: ${newList}`)
+    console.log(`On board: ${board}`)
+    console.log(`With card: ${cardId}`)
     core.group('Fetching card id', async () => {
         await apiCall(key, token, board, newList, cardId);
     });
