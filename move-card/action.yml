@@ -16,6 +16,15 @@ inputs:
     required: true
     default: '-1'
 
+  cardId:
+    description: 'Trello full cardId'
+    required: true
+    default: '-1'
+
+  newList:
+    description: 'Trello list name'
+    required: true
+    default: ''
 
 runs:
   using: 'node12'
