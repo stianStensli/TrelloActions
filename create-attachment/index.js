@@ -23,11 +23,18 @@ async function apiCall(cardId, key, token, url)  {
                 })
                 .then(res => console.log(res))
                 .then(console.log("Upload complete..."))
-                .catch(error => console.log(error));
+                .catch(err => {
+                    console.error(err);
+                    core.setFailed(error.message);
+                });
         }else{
             console.log("Adding attachment was canceled to prevent duplicate attachment.")
         }
-    }).catch(error => console.log(error));
+    })
+    .catch(err => {
+        console.error(err);
+        core.setFailed(error.message);
+    });
 }
 
 try {

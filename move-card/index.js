@@ -31,11 +31,18 @@ fetch(`https://api.trello.com/1/boards/${board}/lists?key=${key}&token=${token}`
                 );
                 return response.text();
               })
-              .then(text => console.log(text))
-              .catch(err => console.error(err));
+            .then(text => console.log(text))
+            .catch(err => {
+                console.error(err);
+                core.setFailed(error.message);
+            });
         }
 
-    }).catch(error => console.log(error));
+    })
+    .catch(err => {
+        console.error(err);
+        core.setFailed(error.message);
+    });
 }
 try {
     const key = core.getInput('key');

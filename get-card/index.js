@@ -14,7 +14,10 @@ async function apiCall(board, key, token, requestedCardShortId)  {
             core.setOutput("success", true)
             core.setOutput("card-id", requestedCard.id);
         })
-        .catch(msg => console.log(msg));
+        .catch(err => {
+            console.error(err);
+            core.setFailed(error.message);
+        });
 }
 
 try {
@@ -30,7 +33,7 @@ try {
         core.group('Fetching card id', async () => {
             await apiCall(board, key, token, requestedCardShortId);
           });
-          
+
     }else{
         console.log("Commit message for Trello link must start with TC-<num>")
     }
