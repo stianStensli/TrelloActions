@@ -16,12 +16,12 @@ inputs:
     required: true
     default: '-1'
 
-  cardId:
+  card-id:
     description: 'Trello full cardId'
     required: true
     default: '-1'
 
-  newList:
+  to-list:
     description: 'Trello list name'
     required: true
     default: ''
