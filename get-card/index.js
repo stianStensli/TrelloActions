@@ -24,7 +24,10 @@ try {
     const key = core.getInput('key');
     const token = core.getInput('token');
     const board = core.getInput('board');
-    
+
+    console.log(github.context)
+    console.log(github.context.payload)
+
     var match = github.context.payload.head_commit.message.match(trelloCardPattern);
     if(match !== null) {
         const requestedCardShortId = match[1]
